@@ -176,7 +176,7 @@ Remote Command Execution
 The Windows 10 host was configured to establish an outbound reverse-shell connection to the Kali Linux laboratory machine. The reverse shell provided the remote command-execution channel used for the subsequent post-compromise activities.
 
 **Evidence:**
-- `![My Screenshot](SCREENSHOTS/msfconsole.png)`
+- SCREENSHOTS/msfconsole.png
 - `msfvenom.png`
 - `unzippingmaliciousshell.png`
 
